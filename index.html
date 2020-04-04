@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+
+<head>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Bin2Dec</title>
+</head>
+
+<body>
+
+    <div class="form">
+        <h1> <span>Binário</span> <img
+                src="https://img.icons8.com/doodle/48/000000/transition-both-directions--v1.png" /> <span>Decimal</span>
+        </h1>
+        <input type="text" name="binario" maxlength="8" placeholder="Ex: 11001100" required id="input">
+        <input type="submit" value="Transformar" id="botao">
+    </div>
+   
+
+    <script>
+        const input = document.getElementById('input')
+        const body = document.getElementsByTagName('body')[0]
+        const div = document.getElementsByClassName('form')[0]
+        const botao = document.getElementById('botao')
+
+        // aviso de erro
+        const aviso = document.createElement('div')
+        aviso.classList.add('erro')
+        aviso.innerText = 'Erro! digite um número binário'
+        aviso.style.display = 'none'
+        body.appendChild(aviso);
+
+        // card do binario
+        const resultado = document.createElement('div')
+        resultado.classList.add('resultado');
+        resultado.style.display = 'none';
+        div.appendChild(resultado)
+
+        input.addEventListener('keyup', event => { // teclado
+            const valor = input.value;
+
+            aviso.style.display = 'none' // esconde o aviso
+            for (let index = 0; index < valor.length; index++) {
+                if (valor[index] != '0' && valor[index] != '1') { // não é binario
+                    input.value = valor.replace(valor[index], ''); // tirar o valor
+                    aviso.style.display = 'block' // mostra               
+                } 
+            }
+        })
+
+        botao.addEventListener('click' , event =>{
+           const binario = input.value;
+           const binarioReverse = binario.split("").reverse().join("");
+           let decimal = 0;
+
+            // calculo
+           for(let index = 0 ; index < binarioReverse.length ; index++){
+               if(binarioReverse[index] == 1){
+                 decimal += Math.pow( 2 , index);
+               }
+           }
+           resultado.innerHTML = `Decimal = <strong>${decimal}</strong>`;
+           resultado.style.display = 'block';
+
+
+          
+        })
+    </script>
+</body>
+
+</html>
